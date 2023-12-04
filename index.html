@@ -20,7 +20,6 @@
       background-position: center;
     }
 
-    /* Your login form styles here */
     #login-form-wrap {
       background-color: black;
       color: white;
@@ -36,7 +35,7 @@
 </head>
 <body>
   <div id="login-form-wrap">
-     <form id="login-form" onsubmit="return handleLogin()">
+    <form id="login-form" onsubmit="return handleLogin()">
       <h2>Login</h2>
       <p>
         <label for="username">Username:</label>
@@ -73,15 +72,17 @@
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
 
-      // For demo purposes, accept any username and password
-      alert(`Welcome, ${username}! You are logged in.`);
-      
-      // Redirect to dashboard.html after successful login
-      window.location.href = 'dashboard.html'; 
-
-      return false; // Prevent form submission
+      // Check if the entered username and password match
+      const storedUser = JSON.parse(localStorage.getItem(username));
+      if (storedUser && storedUser.password === password) {
+        alert(`Welcome, ${username}! You are logged in.`);
+        window.location.href = 'dashboard.html'; // Redirect after successful login
+        return false; // Prevent form submission
+      } else {
+        alert('Invalid username or password. Please try again.');
+        return false; // Prevent form submission
+      }
     }
-
     function showSignUpForm() {
       document.getElementById('signup-form').style.display = 'block';
     }
